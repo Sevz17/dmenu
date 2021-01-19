@@ -35,6 +35,7 @@ struct item {
 };
 
 static char text[BUFSIZ] = "";
+static char pipeout[8] = " | dmenu";
 static char *embed;
 static int bh, mw, mh;
 static int inputw = 0, promptw;
@@ -482,7 +483,22 @@ insert:
 		break;
 	case XK_Return:
 	case XK_KP_Enter:
-		puts((sel && !(ev->state & ShiftMask)) ? sel->text : text);
+
+    if ((sel && !(ev->state & ShiftMask))) {
+		if (sel->text[0] == startpipe[0]) {
+			strncpy(sel->text + strlen(sel->text),pipeout,8);
+			puts(sel->text+1);
+		}
+		puts(sel->text);
+	}
+    else {
+    	if (text[0] == startpipe[0]) {
+			strncpy(text + strlen(text),pipeout,8);
+			puts(text+1);
+    	}
+        puts(text);
+    }
+
 		if (!(ev->state & ControlMask)) {
 			cleanup();
 			exit(0);

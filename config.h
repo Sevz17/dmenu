@@ -22,6 +22,7 @@ static unsigned int lines      = 20;
  * Characters not considered part of a word while deleting words
  * for example: " /?\"&[]"
  */
+static const char startpipe[] = "#";
 static const char worddelimiters[] = " ";
 
 /* Size of the window border */
